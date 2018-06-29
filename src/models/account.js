@@ -142,10 +142,10 @@ module.exports = (db) => {
 
           const now = new Date()
           const doc = {
-            memoId: 'XLM Tipping bot',
+            memoId: 'MOBI Tipping bot',
             amount: amount.toFixed(7),
             createdAt: now.toISOString(),
-            asset: 'native',
+            asset: 'MOBI',
             source: stellar.address,
             target: to,
             hash: hash,

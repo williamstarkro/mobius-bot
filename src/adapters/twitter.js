@@ -14,7 +14,7 @@ function formatMessage(txt) {
  * Reply wrap func
  */
 function formatReply(txt) {
-  return txt + "\n\nAbout me & XLM: http://bit.ly/2FYfbDp"
+  return txt + "\n\nAbout me & MOBI: LINK TO COMMUNITY GUIDE"
 }
 
 class Twitter extends Adapter {
@@ -22,7 +22,7 @@ class Twitter extends Adapter {
   async onDeposit (sourceAccount, amount) {
     this.client.post('direct_messages/new', {
       screen_name: sourceAccount.uniqueId,
-      text: formatMessage(`${amount} XLM have been sucessfully deposited to your account.`)
+      text: formatMessage(`${amount} MOBI have been sucessfully deposited to your account.`)
     })
   }
 
@@ -36,7 +36,7 @@ class Twitter extends Adapter {
   async onTipTransferFailed(tip, amount) {
     this.client.post('direct_messages/new', {
       screen_name: tip.sourceId,
-      text: formatMessage(`I could not tip for you, because of an unknown error. Please try again. Contact the dev team @ https://github.com/shredding/stellar-bot/issues/new if the error persists.`)
+      text: formatMessage(`I could not tip for you, because of an unknown error. Please try again.`)
     })
   }
 
@@ -49,16 +49,16 @@ class Twitter extends Adapter {
 
   async onTip (tip, amount) {
     this.client.post('statuses/update',{
-      status: formatReply(`@${tip.original.user.screen_name} - You tipped ${amount} XLM to @${tip.targetId}.`),
+      status: formatReply(`@${tip.original.user.screen_name} - You tipped ${amount} MOBI to @${tip.targetId}.`),
       in_reply_to_status_id: tip.original.id_str,
     })
     this.client.post('direct_messages/new', {
       screen_name: tip.sourceId,
-      text: formatMessage(`You tipped ${amount} XLM to ${tip.targetId}.`)
+      text: formatMessage(`You tipped ${amount} MOBI to ${tip.targetId}.`)
     })
     this.client.post('direct_messages/new', {
       screen_name: tip.targetId,
-      text: formatMessage(`${tip.sourceId} tipped ${amount} XLM to you. Have fun and enjoy the stellar experience.`)
+      text: formatMessage(`${tip.sourceId} tipped ${amount} MOBI to you. Have fun and enjoy the mobius experience.`)
     })
   }
 
@@ -97,7 +97,7 @@ class Twitter extends Adapter {
   async onWithdrawal (uniqueId, address, amount, hash) {
     this.client.post('direct_messages/new', {
       screen_name: uniqueId,
-      text: formatMessage(`${amount} XLM are on their way to ${address}.`)
+      text: formatMessage(`${amount} MOBI are on their way to ${address}.`)
     })
   }
 
@@ -125,7 +125,7 @@ class Twitter extends Adapter {
         const balance = await this.requestBalance(this.name, msg.direct_message.sender.screen_name)
         this.client.post('direct_messages/new', {
           screen_name: msg.direct_message.sender.screen_name,
-          text: formatMessage(`Your current balance is ${balance} XLM.`)
+          text: formatMessage(`Your current balance is ${balance} MOBI.`)
         })
 
       } else if (txt.indexOf('refresh my memo id') > -1) {
@@ -143,10 +143,10 @@ class Twitter extends Adapter {
         const extract = this.extractWithdrawal(txt)
 
         if (!extract) {
-          utils.log(`XLM withdrawal failed - unparsable message from ${msg.direct_message.sender.screen_name}.`)
+          utils.log(`MOBI withdrawal failed - unparsable message from ${msg.direct_message.sender.screen_name}.`)
           this.client.post('direct_messages/new', {
             screen_name: msg.direct_message.sender.screen_name,
-            text: formatMessage(`I could not withdraw. Please make sure that the format matches "withdraw YOUR_AMOUNT XLM to YOUR_PUBLIC_KEY.`)
+            text: formatMessage(`I could not withdraw. Please make sure that the format matches "withdraw YOUR_AMOUNT MOBI to YOUR_PUBLIC_KEY.`)
           })
         } else {
           this.receiveWithdrawalRequest({
@@ -217,7 +217,7 @@ class Twitter extends Adapter {
   }
 
   extractWithdrawal(txt) {
-    const matches = txt.match(/([\d\.]*) XLM to ([\w\d]+)/i)
+    const matches = txt.match(/([\d\.]*) MOBI to ([\w\d]+)/i)
     if (matches && matches.length === 3 && matches[1] && matches[2]) {
       return {
         amount: matches[1],
@@ -231,8 +231,8 @@ class Twitter extends Adapter {
    * All supported tipping formats ...
    */
   extractTipAmount (tipText) {
-    const matches =  tipText.match(/([\d\.]+)[\s{1}]?XLM/i)
-    return matches ? matches[0].replace(/xlm/i, '').replace(/\s/g, '') : undefined
+    const matches =  tipText.match(/([\d\.]+)[\s{1}]?MOBI/i)
+    return matches ? matches[0].replace(/mobi/i, '').replace(/\s/g, '') : undefined
   }
 }
 

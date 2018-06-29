@@ -17,30 +17,30 @@ describe('redditAdapter', async () => {
 
   describe('extractTipAmount', () => {
     it ('should extract valid payments', () => {
-      assert.equal('1', redditAdapter.extractTipAmount('foo +++1 XLM bar'))
-      assert.equal('1.12', redditAdapter.extractTipAmount('foo +++1.12 XLM bar'))
-      assert.equal('100', redditAdapter.extractTipAmount('foo +++100 xlm!'))
-      assert.equal('10', redditAdapter.extractTipAmount('foo +++10xlm bar'))
-      assert.equal('10', redditAdapter.extractTipAmount('foo +++ 10xlm bar'))
-      assert.equal('10.123', redditAdapter.extractTipAmount('foo +++ 10.123 xlm bar'))
-      assert.equal('1.12', redditAdapter.extractTipAmount('foo +++ 1.12xlm bar'))
+      assert.equal('1', redditAdapter.extractTipAmount('foo +++1 mobi bar'))
+      assert.equal('1.12', redditAdapter.extractTipAmount('foo +++1.12 mobi bar'))
+      assert.equal('100', redditAdapter.extractTipAmount('foo +++100 mobi!'))
+      assert.equal('10', redditAdapter.extractTipAmount('foo +++10mobi bar'))
+      assert.equal('10', redditAdapter.extractTipAmount('foo +++ 10mobi bar'))
+      assert.equal('10.123', redditAdapter.extractTipAmount('foo +++ 10.123 mobi bar'))
+      assert.equal('1.12', redditAdapter.extractTipAmount('foo +++ 1.12mobi bar'))
     })
 
     it ('should return undefined if no payment is included', () => {
-      assert.equal(undefined, redditAdapter.extractTipAmount('foo ++1 XLM bar'))
-      assert.equal(undefined, redditAdapter.extractTipAmount('foo 1.12 XLM bar'))
+      assert.equal(undefined, redditAdapter.extractTipAmount('foo ++1 MOBI bar'))
+      assert.equal(undefined, redditAdapter.extractTipAmount('foo 1.12 MOBI bar'))
       assert.equal(undefined, redditAdapter.extractTipAmount('hello world'))
     })
   })
 
   describe('extractWithdrawal', () => {
     it ('should extract valid withdrawals', () => {
-      const sample = '<!-- SC_OFF --><div class="md"><p>12.543 XLM\nGCB5JOK5XBOVC6NMVUIW3ACNXNV7ZIQDHVZMT326YHZ35SJ4CNVUQ36Z</p>\n</div><!-- SC_ON -->'
+      const sample = '<!-- SC_OFF --><div class="md"><p>12.543 MOBI\nGCB5JOK5XBOVC6NMVUIW3ACNXNV7ZIQDHVZMT326YHZ35SJ4CNVUQ36Z</p>\n</div><!-- SC_ON -->'
       const data = redditAdapter.extractWithdrawal(sample)
       assert.equal('12.543', data.amount)
       assert.equal('GCB5JOK5XBOVC6NMVUIW3ACNXNV7ZIQDHVZMT326YHZ35SJ4CNVUQ36Z', data.address)
 
-      const sample2 = '<!-- SC_OFF --><div class="md"><p>1 XLM\nGCB5JOK5XBOVC6NMVUIW3ACNXNV7ZIQDHVZMT326YHZ35SJ4CNVUQ36Z</p>\n</div><!-- SC_ON -->'
+      const sample2 = '<!-- SC_OFF --><div class="md"><p>1 MOBI\nGCB5JOK5XBOVC6NMVUIW3ACNXNV7ZIQDHVZMT326YHZ35SJ4CNVUQ36Z</p>\n</div><!-- SC_ON -->'
       const data2 = redditAdapter.extractWithdrawal(sample2)
       assert.equal('1', data2.amount)
       assert.equal('GCB5JOK5XBOVC6NMVUIW3ACNXNV7ZIQDHVZMT326YHZ35SJ4CNVUQ36Z', data2.address)
@@ -53,7 +53,7 @@ describe('redditAdapter', async () => {
 
     it ('should reject invalid withdrawals', () => {
       // Invalid amount
-      const sample2 = '<!-- SC_OFF --><div class="md"><p>Test XLM\nGCB5JOK5XBOVC6NMVUIW3ACNXNV7ZIQDHVZMT326YHZ35SJ4CNVUQ36Z</p>\n</div><!-- SC_ON -->'
+      const sample2 = '<!-- SC_OFF --><div class="md"><p>Test MOBI\nGCB5JOK5XBOVC6NMVUIW3ACNXNV7ZIQDHVZMT326YHZ35SJ4CNVUQ36Z</p>\n</div><!-- SC_ON -->'
       assert.equal(undefined, redditAdapter.extractWithdrawal(sample2))
     })
   })

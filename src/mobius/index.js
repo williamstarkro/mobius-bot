@@ -32,15 +32,15 @@ module.exports = async function (models) {
           if (record.to != publicKey) {
             return;
           }
-          if (record.asset_type != 'native') {
-             // If you are a XLM exchange and the customer sends
-             // you a non-native asset, some options for handling it are
-             // 1. Trade the asset to native and credit that amount
+          if (record.asset_type != 'MOBI') {
+             // If you are a MOBI exchange and the customer sends
+             // you a non-mobi asset, some options for handling it are
+             // 1. Trade the asset to mobi and credit that amount
              // 2. Send it back to the customer
 
              // We haven't implemented that yet! fairx.io to come!
-             utils.log('Trying to send non-XLM credit.')
-             events.emit('NOT_NATIVE_ASSET_RECEIVED', record)
+             utils.log('Trying to send non-mobi credit.')
+             events.emit('NOT_MOBI_ASSET_RECEIVED', record)
              return;
           }
           try {
@@ -109,7 +109,7 @@ module.exports = async function (models) {
                   destination: to,
                   startingBalance: amount
                 }))
-                .addMemo(StellarSdk.Memo.text('XLM Tipping bot'))
+                .addMemo(StellarSdk.Memo.text('MOBI Tipping bot'))
                 .build()
               transaction.sign(keyPair)
               return transaction
@@ -126,11 +126,11 @@ module.exports = async function (models) {
         .addOperation(StellarSdk.Operation.payment({
           destination: to,
           // Because Stellar allows transaction in many currencies, you must
-          // specify the asset type. The special "native" asset represents Lumens.
-          asset: StellarSdk.Asset.native(),
+          // specify the asset type. The "MOBI" asset represents Mobius.
+          asset: StellarSdk.Asset("MOBI"),
           amount: amount
         }))
-        .addMemo(StellarSdk.Memo.text('XLM Tipping bot'))
+        .addMemo(StellarSdk.Memo.text('MOBI Tipping bot'))
         .build()
       transaction.sign(keyPair)
       return transaction

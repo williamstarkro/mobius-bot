@@ -6,9 +6,9 @@ const Twitter = require('./src/adapters/twitter')
 async function bootstrap () {
 
   const models = await require('./src/models')()
-  const stellar = await require('./src/stellar')(models)
+  const mobius = await require('./src/mobius')(models)
 
-  let config = { models, stellar }
+  let config = { models, mobius }
 
   const adapters = [
     new Reddit(config),

@@ -158,9 +158,9 @@ describe('adapter', async () => {
         balance: '5.0000000'
       }).then(() => {
         Transaction.createAsync({
-          memoId: 'XLM Tipping bot',
+          memoId: 'MOBI Tipping bot',
           amount: '5',
-          asset: 'native',
+          asset: 'MOBI',
           hash: 'hash',
           type: 'withdrawal',
           target: target,
